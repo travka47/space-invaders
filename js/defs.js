@@ -1,7 +1,50 @@
 const ImageFiles = [
     'playerShip3_orange',
-    'Lasers/laserBlue02_s'
+    'Lasers/laserBlue02_s',
+    'Enemies/enemyRed1'
 ];
+
+const WayPoints = {
+    LEFTTORIGHTSHALLOW: [{
+        rotation: 0,
+        x: 60,
+        y: -90,
+        dir_x: 0,
+        dir_y: 0
+    },
+    {
+        rotation: 0,
+        x: 60,
+        y: 128,
+        dir_x: 0,
+        dir_y: 1
+    },
+    {
+        rotation: 0,
+        x: 810,
+        y: 128,
+        dir_x: 1,
+        dir_y: 0
+    }
+    ],
+    STREAMFROMB180: [{
+        rotation: 0,
+        x: 180,
+        y: 620,
+        dir_x: 0,
+        dir_y: 0
+    },
+    {
+        rotation: 0,
+        x: 180,
+        y: -90,
+        dir_x: 0,
+        dir_y: -1
+    }
+    ]
+};
+
+let EnemySequences = [];
 
 const GameSettings = {
     keyPress: {
@@ -32,7 +75,12 @@ const GameSettings = {
         dead: 1,
         hitFlashing: 2
     }, 
-    playerMoveStep : 8
+    playerMoveStep : 8,
+    enemyState: {
+        ready: 1,
+        dead: 0,
+        movingToWaypoint: 2
+    }
 };
 
 

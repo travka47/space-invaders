@@ -7,6 +7,7 @@ function tick() {
     $('#divFPS').text('FPS ' + GameManager.fps);
 
     GameManager.bullets.update(dt);
+    GameManager.enemies.update(dt);
 
     setTimeout(tick, GameSettings.targetFPS);
 }
@@ -17,6 +18,10 @@ function resetBullets() {
     } else {
         GameManager.bullets = new BulletCollection(GameManager.player);
     }
+}
+
+function resetEnemies() {
+    GameManager.enemies = new EnemyCollection(GameManager.player);
 }
 
 function resetPlayer() {
@@ -38,6 +43,7 @@ function resetGame() {
     console.log('Main Game init()');
     resetPlayer();
     resetBullets();
+    resetEnemies();
     setTimeout(tick, GameSettings.targetFPS);
 }
 
@@ -62,26 +68,28 @@ function processAsset(indexNum) {
     }
 }
 
-$( function() {
-    processAsset(0);
-    $(document).keydown(
-        function(e) {
-            switch (e.which) {
-                case GameSettings.keyPress.up:
-                    GameManager.player.move(0, -1);
-                    break;
-                case GameSettings.keyPress.down:
-                    GameManager.player.move(0, 1);
-                    break;
-                case GameSettings.keyPress.left:
-                    GameManager.player.move(-1, 0);
-                    break;
-                case GameSettings.keyPress.right:
-                    GameManager.player.move(1, 0);
-                    break;
-                case GameSettings.keyPress.space:
-                    break;
-            }
+
+$(function () {
+    console.log('ready..!');
+    console.log("GameSettings:GameSettings", GameSettings);
+    setUpSequences();
+    $(document).keydown(function (e) {
+        switch (e.which) {
+            case GameSettings.keyPress.up:
+                GameManager.player.move(0, -1);
+                break;
+            case GameSettings.keyPress.down:
+                GameManager.player.move(0, 1);
+                break;
+            case GameSettings.keyPress.left:
+                GameManager.player.move(-1, 0);
+                break;
+            case GameSettings.keyPress.right:
+                GameManager.player.move(1, 0);
+                break;
+            case GameSettings.keyPress.space:
+                break;
         }
-    );
+    });
+    processAsset(0);
 });
