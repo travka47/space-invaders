@@ -5,6 +5,7 @@ class Sprite {
         this.imgName = imgName;
         this.size = sizePx;
         this.anchorShift = new Point(-this.size.width / 2, -this.size.height / 2);
+        this.containingBox = new Rect(this.position.x, this.position.y, this.size.width, this.size.height);
     }
 
     addToBoard(shift) {
@@ -33,6 +34,7 @@ class Sprite {
 
     setPosition(x, y, shift) {
         this.position.update(x, y);
+        this.containingBox.update(this.position.x, this.position.y);
         if (shift == true) {
             this.incrementPosition(this.anchorShift.x, this.anchorShift.y);
         }
@@ -41,13 +43,14 @@ class Sprite {
 
     updatePosition(x, y) {
         this.position.update(x,y);
+        this.containingBox.update(this.position.x, this.position.y);
         this.draw();
     }
 
     incrementPosition(ix, iy) {
         this.position.increment(ix,iy);
+        this.containingBox.update(this.position.x, this.position.y);
         this.draw();
     }
-
 
 }

@@ -68,7 +68,11 @@ function resetBullets() {
 }
 
 function resetEnemies() {
-    GameManager.enemies = new EnemyCollection(GameManager.player);
+    if(GameManager.enemies != undefined) {
+        GameManager.enemies.reset();
+    } else {
+        GameManager.enemies = new EnemyCollection(GameManager.player, GameManager.bullets);
+    }
 }
 
 function resetplayer() {

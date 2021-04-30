@@ -77,7 +77,7 @@ class Enemy extends Sprite {
 }
 
 class EnemyCollection {
-	constructor(player) {
+	constructor(player, bullets) {
 		this.listEnemies = [];
 		this.lastAdded = 0;
 		this.gameOver = false;
@@ -85,6 +85,17 @@ class EnemyCollection {
 		this.sequencesDone = false;
 		this.count = 0;
 		this.player = player;
+        this.bullets = bullets;
+    }
+
+    reset() {
+        this.killAll();
+		this.listEnemies = [];
+		this.lastAdded = 0;
+		this.gameOver = false;
+		this.sequenceIndex = 0;
+		this.sequencesDone = false;
+		this.count = 0;
     }
 
     killAll() {
@@ -103,8 +114,24 @@ class EnemyCollection {
         for (let i = this.listEnemies.length - 1; i >= 0; --i) {
             if (this.listEnemies[i].state == GameSettings.enemyState.dead) {
             	this.listEnemies.splice(i, 1);
-            } else {
-                this.listEnemies[i].update(dt);
+            } else if (this.listEnemies[i].state == GameSettings.enemyState.movingToWaypoint){
+                let en = this.listEnemies[i];
+
+                for (let b = 0; b < this.bullets.listBullets.length; ++b) {
+                    let bu = this.bullets.listBullets[b];
+                    if (bu.dead == false &&
+                        bu.position.y > GameSettings.bulletTop &&
+                        en.containingBox.IntersectedBy(bu.containingBox) == true) {
+                            bu.killMe();
+                            en.lives--;
+                            if (en.lives <= 0) {
+                                this.player.incrementScore(en.score);
+                                en.killMe();
+                            }
+                    }
+                }
+
+                en.update(dt);
             }
         }
 
@@ -156,6 +183,6 @@ function addEnemySequence(delayBefore, image, score,
 function setUpSequences() {
     addEnemySequence(2000, 'Enemies/enemyRed1', 100, 1, 200 / 1000, 
         2, 800, WayPoints['LEFTTORIGHTSHALLOW']);
-    addEnemySequence(4000, 'Enemies/enemyRed1', 100, 1, 400 / 1000, 
-        6, 400, WayPoints['STREAMFROMB180']);
+    /*addEnemySequence(4000, 'Enemies/enemyRed1', 100, 1, 400 / 1000, 
+        6, 400, WayPoints['STREAMFROMB180']);*/
 }
