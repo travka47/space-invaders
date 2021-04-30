@@ -1,10 +1,25 @@
+function resetPlayer() {
+    if (GameManager.player == undefined) {
+        let asset = GameManager.assets['playerShip3_orange'];
+
+        GameManager.player = new Sprite(GameSettings.playerDivName,
+            new Point(GameSettings.playerStart.x, GameSettings.playerStart.y),
+            asset.fileName,
+            new Size(asset.width, asset.height)
+        );
+        GameManager.player.addToBoard(true);
+    }
+	console.log('resetplayer() GameManager.player:' , GameManager.player);
+}
+
 function init() {
     console.log('Main Game init()');
+    resetPlayer();
 }
 
 function processAsset(indexNum) {
-    var img = new Image();
-    var fileName = 'assets/' + ImageFiles[indexNum] + '.png';
+    let img = new Image();
+    let fileName = 'assets/' + ImageFiles[indexNum] + '.png';
     img.src = fileName;
     img.onload = function() {
         GameManager.assets[ImageFiles[indexNum]] = {
