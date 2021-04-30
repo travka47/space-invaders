@@ -6,7 +6,17 @@ function tick() {
 
     $('#divFPS').text('FPS ' + GameManager.fps);
 
+    GameManager.bullets.update(dt);
+
     setTimeout(tick, GameSettings.targetFPS);
+}
+
+function resetBullets() {
+    if (GameManager.bullets != undefined) {
+        GameManager.bullets.reset();
+    } else {
+        GameManager.bullets = new BulletCollection(GameManager.player);
+    }
 }
 
 function resetPlayer() {
@@ -24,9 +34,10 @@ function resetPlayer() {
     GameManager.player.reset();
 }
 
-function init() {
+function resetGame() {
     console.log('Main Game init()');
     resetPlayer();
+    resetBullets();
     setTimeout(tick, GameSettings.targetFPS);
 }
 
@@ -45,7 +56,7 @@ function processAsset(indexNum) {
             processAsset(indexNum);
         } else {
             console.log('Asset Done:', GameManager.assets);
-            init();
+            resetGame();
         }
 
     }
