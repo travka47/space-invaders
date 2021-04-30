@@ -24,7 +24,8 @@ const GameSettings = {
         ok: 0,
         dead: 1,
         hitFlashing: 2
-    }
+    }, 
+    playerMoveStep : 8
 };
 
 
