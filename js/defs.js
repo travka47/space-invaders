@@ -10,6 +10,7 @@ const GameSettings = {
         down: 40,
         space: 32
     },
+    targetFPS: 1000 / 60,
     playAreaWidth: 720,
     playAreaHeight: 576,
     playAreaDiv: '#playArea',
@@ -31,5 +32,8 @@ const GameSettings = {
 
 let GameManager = {
     assets: {},
-    player: undefined
+    player: undefined,
+    lastUpdated: Date.now(),
+    elapsedTime: 0,
+    fps: 0
 };
