@@ -80,7 +80,16 @@ const GameSettings = {
         ready: 1,
         dead: 0,
         movingToWaypoint: 2
-    }
+    },
+    pressSpaceDelay: 3000,
+    gamePhase: {
+        readyToplay: 1,
+        countdownToStart: 2,
+        playing: 3,
+        gameOver: 4
+    },
+    countdownGap: 700,
+    countDownValues: ['2', '1', 'GO!']
 };
 
 
@@ -88,6 +97,7 @@ let GameManager = {
     assets: {},
     player: undefined,
     bullets: undefined,
+    phase: GameSettings.gamePhase.gameOver,
     lastUpdated: Date.now(),
     elapsedTime: 0,
     fps: 0
