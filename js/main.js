@@ -39,8 +39,8 @@ function showGameOver() {
     clearTimeouts();
 
     writeMessage('Game Over');
-    setTimeout(function() { appendMessage('Press Space To Reset'); }, 
-            GameSettings.pressSpaceDelay);
+    setTimeout(function () { appendMessage('Press Space To Reset'); },
+        GameSettings.pressSpaceDelay);
 
 }
 
@@ -56,10 +56,10 @@ function runCountDown() {
     GameManager.phase = GameSettings.gamePhase.countdownToStart;
     writeMessage(3);
     for (let i = 0; i < GameSettings.countDownValues.length; ++i) {
-        setTimeout(writeMessage, GameSettings.countdownGap * (i + 1), 
+        setTimeout(writeMessage, GameSettings.countdownGap * (i + 1),
             GameSettings.countDownValues[i]);
     }
-    setTimeout(endCountDown, 
+    setTimeout(endCountDown,
         (GameSettings.countDownValues.length + 1) * GameSettings.countdownGap);
 }
 
@@ -76,6 +76,10 @@ function clearMessages() {
     $('#messageContainer').empty();
 }
 
+function resetExplosions() {
+    GameManager.explosions = new Explosions('Explosion/explosion00_s');
+}
+
 function resetBullets() {
     if (GameManager.bullets != undefined) {
         GameManager.bullets.reset();
@@ -85,45 +89,47 @@ function resetBullets() {
 }
 
 function resetEnemies() {
-    if(GameManager.enemies != undefined) {
+    if (GameManager.enemies != undefined) {
         GameManager.enemies.reset();
     } else {
-        GameManager.enemies = new EnemyCollection(GameManager.player, GameManager.bullets);
+        GameManager.enemies = new EnemyCollection(GameManager.player, 
+            GameManager.bullets,
+            GameManager.explosions);
     }
 }
 
 function resetplayer() {
-	console.log('resetplayer()');
-	console.log('resetplayer() GameManager.player:' , GameManager.player);
-	if (GameManager.player == undefined) {
+    console.log('resetplayer()');
+    console.log('resetplayer() GameManager.player:', GameManager.player);
+    if (GameManager.player == undefined) {
         console.log('resetplayer() making new');
         let asset = GameManager.assets['playerShip3_orange'];
 
-         GameManager.player = new Player('playerSprite', 
-         	new Point(GameSettings.playerStart.x, GameSettings.playerStart.y), 
-             GameManager.assets['playerShip3_orange'] ,
-             new Rect(40, 40, GameSettings.playAreaWidth - 80, GameSettings.playAreaHeight - 80));
-         GameManager.player.addToBoard(true);
+        GameManager.player = new Player('playerSprite', new Point(GameSettings.playerStart.x, GameSettings.playerStart.y),
+            GameManager.assets['playerShip3_orange'],
+            new Rect(40, 40, GameSettings.playAreaWidth - 80, GameSettings.playAreaHeight - 80));
+        GameManager.player.addToBoard(true);
 
-		console.log('resetplayer() added new GameManager.player:' , GameManager.player);
-    } 
+        console.log('resetplayer() added new GameManager.player:', GameManager.player);
+    }
 
-    console.log('resetplayer() GameManager.player:' , GameManager.player);
+    console.log('resetplayer() GameManager.player:', GameManager.player);
     GameManager.player.reset();
 }
 
 function resetGame() {
     console.log('Main Game init()');
-    clearTimeout();
+    clearTimeouts();
     removeStars();
     resetplayer();
     resetBullets();
+    resetExplosions();
     resetEnemies();
-    
+
     GameManager.phase = GameSettings.gamePhase.readyToplay;
     GameManager.lastUpdated = Date.now();
     GameManager.elapsedTime = 0;
-    
+
     writeMessage('Press Space To Start');
 }
 
@@ -154,7 +160,7 @@ $(function () {
     console.log("GameSettings:GameSettings", GameSettings);
     setUpSequences();
     $(document).keydown(function (e) {
-        if(GameManager.phase == GameSettings.gamePhase.readyToplay) {
+        if (GameManager.phase == GameSettings.gamePhase.readyToplay) {
             if (e.which == GameSettings.keyPress.space) {
                 runCountDown();
             }
@@ -173,7 +179,7 @@ $(function () {
                     GameManager.player.move(1, 0);
                     break;
             }
-        } else if(GameManager.phase == GameSettings.gameOver) {
+        } else if (GameManager.phase == GameSettings.gameOver) {
             if (e.which == GameSettings.keyPress.space) {
                 resetGame();
             }

@@ -1,7 +1,16 @@
 const ImageFiles = [
     'playerShip3_orange',
     'Lasers/laserBlue02_s',
-    'Enemies/enemyRed1'
+    'Enemies/enemyRed1', 
+    'Explosion/explosion00_s',
+    'Explosion/explosion01_s',
+    'Explosion/explosion02_s',
+    'Explosion/explosion03_s',
+    'Explosion/explosion04_s',
+    'Explosion/explosion05_s',
+    'Explosion/explosion06_s',
+    'Explosion/explosion07_s',
+    'Explosion/explosion08_s'
 ];
 
 
@@ -59,7 +68,7 @@ const GameSettings = {
 
     bulletSpeed: 700 / 1000,
     bulletLife: 4000,
-    bulletFireRate: 10000,
+    bulletFireRate: 200,
     bulletTop: 10,
 
     playAreaWidth: 720,
@@ -95,7 +104,8 @@ const GameSettings = {
         gameOver: 4
     },
     countdownGap: 700,
-    countDownValues: ['2', '1', 'GO!']
+    countDownValues: ['2', '1', 'GO!'],
+    explosionTimeout: 1000
 
 };
 
@@ -103,6 +113,7 @@ let GameManager = {
     assets : {},
     player: undefined,
     bullets: undefined,
+    explosions: undefined,
     timeouts: [],
     phase: GameSettings.gamePhase.gameOver,
     lastUpdated: Date.now(),
