@@ -2,19 +2,33 @@ function resetPlayer() {
     if (GameManager.player == undefined) {
         let asset = GameManager.assets['playerShip3_orange'];
 
-        GameManager.player = new Sprite(GameSettings.playerDivName,
+        GameManager.player = new Player(GameSettings.playerDivName,
             new Point(GameSettings.playerStart.x, GameSettings.playerStart.y),
-            asset.fileName,
-            new Size(asset.width, asset.height)
+            asset
         );
         GameManager.player.addToBoard(true);
     }
 	console.log('resetplayer() GameManager.player:' , GameManager.player);
+    GameManager.player.reset();
 }
 
 function init() {
     console.log('Main Game init()');
     resetPlayer();
+
+    window.setTimeout(function() {
+        GameManager.player.incrementScore(200);
+    }, 3000);
+
+    window.setTimeout(function() {
+        GameManager.player.incrementScore(200);
+        GameManager.player.lives--;
+        GameManager.player.setLives();
+    }, 6000);
+
+    window.setTimeout(function() {
+        GameManager.player.reset();
+    }, 9000);
 }
 
 function processAsset(indexNum) {

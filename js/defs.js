@@ -18,6 +18,12 @@ const GameSettings = {
     playerStart: {
         x: 360,
         y: 440
+    },
+    playerStartLives: 3,
+    playerState: {
+        ok: 0,
+        dead: 1,
+        hitFlashing: 2
     }
 };
 
