@@ -31,7 +31,17 @@ class Enemy extends Sprite {
         switch(this.state) {
             case GameSettings.enemyState.movingToWaypoint:
                 this.moveTowardPoint(dt);
+                this.checkplayerCollision();
             break;
+        }
+    }
+
+    checkplayerCollision() {
+        if(this.containingBox.IntersectedBy(this.player.containingBox) == true) {
+            if (this.player.hit == false) {
+                this.player.hit = true;
+                console.log('collision with player');
+            }
         }
     }
 
@@ -85,7 +95,7 @@ class EnemyCollection {
 		this.sequencesDone = false;
 		this.count = 0;
 		this.player = player;
-        this.bullets = bullets;
+		this.bullets = bullets;
     }
 
     reset() {
@@ -183,6 +193,6 @@ function addEnemySequence(delayBefore, image, score,
 function setUpSequences() {
     addEnemySequence(2000, 'Enemies/enemyRed1', 100, 1, 200 / 1000, 
         2, 800, WayPoints['LEFTTORIGHTSHALLOW']);
-    /*addEnemySequence(4000, 'Enemies/enemyRed1', 100, 1, 400 / 1000, 
-        6, 400, WayPoints['STREAMFROMB180']);*/
+    addEnemySequence(4000, 'Enemies/enemyRed1', 100, 1, 400 / 1000, 
+        6, 400, WayPoints['STREAMFROMB180']);
 }

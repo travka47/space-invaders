@@ -4,6 +4,7 @@ const ImageFiles = [
     'Enemies/enemyRed1'
 ];
 
+
 const WayPoints = {
     LEFTTORIGHTSHALLOW: [{
         rotation: 0,
@@ -58,12 +59,14 @@ const GameSettings = {
 
     bulletSpeed: 700 / 1000,
     bulletLife: 4000,
-    bulletFireRate: 200,
+    bulletFireRate: 10000,
     bulletTop: 10,
 
     playAreaWidth: 720,
     playAreaHeight: 576,
     playAreaDiv: '#playArea',
+
+    playerFlashOpacity: '0.5',
 
     playerDivName: 'playerSprite',
     playerStart: {
@@ -75,8 +78,8 @@ const GameSettings = {
         ok: 0,
         dead: 1,
         hitFlashing: 2
-    }, 
-    playerMoveStep : 8,
+    },
+    playerMoveStep: 8,
     enemyState: {
         ready: 1,
         dead: 0,
@@ -91,11 +94,11 @@ const GameSettings = {
     },
     countdownGap: 700,
     countDownValues: ['2', '1', 'GO!']
+
 };
 
-
 let GameManager = {
-    assets: {},
+    assets : {},
     player: undefined,
     bullets: undefined,
     phase: GameSettings.gamePhase.gameOver,
