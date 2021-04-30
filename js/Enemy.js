@@ -95,7 +95,7 @@ class EnemyCollection {
 		this.sequencesDone = false;
 		this.count = 0;
 		this.player = player;
-		this.bullets = bullets;
+        this.bullets = bullets;
         this.explosions = explosions;
     }
 
@@ -159,7 +159,6 @@ class EnemyCollection {
     }
     
     addEnemy() {
-		// add a new enemy withe the sequence data
 		let seq = EnemySequences[this.sequenceIndex];
 		let en_new = new Enemy('en_' + this.count, GameManager.assets[seq.image],
 		this.player, seq );
@@ -175,27 +174,52 @@ class EnemyCollection {
 	}
 }
 
-function addEnemySequence(delayBefore, image, score, 
-    lives, speed, number, delayBetween, waypoints) {
-        for(let i = 0; i < number; ++i) {
-            let delay = delayBetween;
-            if (i == 0) {
-                delay = delayBefore;
-            }
-            EnemySequences.push({
-                delayBefore: delay,
-                image: image,
-                waypoints: waypoints,
-                score: score,
-                lives: lives,
-                speed: speed
-            });
+function addEnemySequence(delayBefore, delayBetween, image, score, 
+    lives, speed, number, waypoints) {
+    for (let i = 0; i < number; ++i) {
+        let delay = delayBetween;
+        if(i == 0) {
+            delay = delayBefore;
         }
+        EnemySequences.push(
+            {
+            delayBefore: delay,
+            image: image,
+            waypoints: waypoints,
+            score: score,
+            lives: lives,
+            speed: speed
+            }
+        )
+    }
+}
+
+function createSequence(delayBetween, image, number, attackBlock, score, lives, speed, delayBefore) {
+    for (let i = 0; i < attackBlock.length; ++i) {
+        let delay = delayBetween;
+        if (i == 0) {
+            delay = delayBefore
+        }
+        addEnemySequence(delay, delayBetween, image, score, lives, speed, number, attackBlock[i]);
+    }
 }
 
 function setUpSequences() {
-    addEnemySequence(2000, 'Enemies/enemyRed1', 100, 1, 200 / 1000, 
-        2, 800, WayPoints['LEFTTORIGHTSHALLOW']);
-    addEnemySequence(4000, 'Enemies/enemyRed1', 100, 1, 400 / 1000, 
-        6, 400, WayPoints['STREAMFROMB180']);
+    createSequence(600,'Enemies/enemyGreen2', 1,  AttackBlocks.STREAMDOWN, 100, 1, enemySpeed.medium, 1000);
+    createSequence(600,'Enemies/enemyBlack4', 1,  AttackBlocks.STREAMDOWNMIXED, 100, 1, enemySpeed.medium, 2000);
+    createSequence(600,'Enemies/enemyBlue3', 1,  AttackBlocks.STREAMRETURNMIXED, 100, 1, enemySpeed.medium, 2000);
+    createSequence(600,'Enemies/enemyRed5', 1,  AttackBlocks.BADDIETYPE1, 500, 8, enemySpeed.slow, 500);
+    createSequence(600,'Enemies/enemyBlue3', 2,  AttackBlocks.STREAMUPMIXED, 100, 1, enemySpeed.fast, 7000);
+    createSequence(600,'Enemies/enemyBlack4', 1,  AttackBlocks.SIDEASSAULT1, 100, 1, enemySpeed.fast, 3000);
+    createSequence(600,'Enemies/enemyBlue3', 1,  AttackBlocks.SIDEASSAULT2, 100, 1, enemySpeed.fast, 3000);
+    createSequence(600,'Enemies/enemyGreen2', 2,  AttackBlocks.SIDEASSAULT3, 100, 1, enemySpeed.fast, 2000);
+    createSequence(600,'Enemies/enemyRed1', 2,  AttackBlocks.SIDEASSAULT4, 100, 1, enemySpeed.fast, 2000);
+    createSequence(600,'Enemies/enemyBlue3', 4,  AttackBlocks.SIDEASSAULT2, 100, 1, enemySpeed.medium, 2000);
+    createSequence(600,'Enemies/enemyGreen2', 4,  AttackBlocks.SIDEASSAULT3, 100, 1, enemySpeed.medium, 2000);
+    createSequence(600,'Enemies/enemyRed5', 1,  AttackBlocks.BADDIETYPE2, 500, 8, enemySpeed.slow, 500);
+    createSequence(600,'Enemies/enemyGreen2', 2,  AttackBlocks.STREAMDOWN, 100, 1, enemySpeed.fast, 2000);
+    createSequence(600,'Enemies/enemyBlack4', 2,  AttackBlocks.STREAMDOWNMIXED, 100, 1, enemySpeed.fast, 2000);
+    createSequence(600,'Enemies/enemyBlue3', 4,  AttackBlocks.STREAMRETURNMIXED, 100, 1, enemySpeed.medium, 2000);
+    console.log("EnemySequences:" , EnemySequences);
+
 }
