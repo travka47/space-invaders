@@ -67,6 +67,8 @@ const GameSettings = {
     playAreaDiv: '#playArea',
 
     playerFlashOpacity: '0.5',
+    playerFlashTime: 300,
+    playerFlashes: 8,
 
     playerDivName: 'playerSprite',
     playerStart: {
